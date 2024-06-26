@@ -11,19 +11,18 @@ namespace CapaDatos
 {
     public class Conexion
     {
-
-        public static string ObtenerCadenaConexion()
+        private string sql = string.Empty;
+        public Conexion()
         {
-            // Construye la configuración sin intentar instanciar IConfiguration directamente.
-            IConfiguration configuracion = new ConfigurationBuilder()
+            var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            // Obtiene la cadena de conexión usando la configuración construida.
-            return configuracion.GetConnectionString("sql");
+                .AddJsonFile("appsettings.json").Build();
+            sql = builder.GetSection("ConnectionStrings:sql").Value;
+        }
+        public string getConexion()
+        {
+            return sql;
         }
         //public static string Cn = ConfigurationManager.ConnectionStrings["sql"].ToString();
-
     }
 }

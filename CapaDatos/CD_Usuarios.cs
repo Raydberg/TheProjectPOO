@@ -14,10 +14,10 @@ namespace CapaDatos
         public List<Usuario> Listar()
         {
             List<Usuario> lista = new List<Usuario>();
-
+            var conexion = new Conexion();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.Cn))
+                using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
                 {
                     string query = "select IdUsuario,Nombres,Apellidos,Correo,Clave,Reestablecer,Activo from USUARIO";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -45,8 +45,11 @@ namespace CapaDatos
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
+                string error = ex.Message;
+                Console.WriteLine("Error al traer cliente de la base de datos");
+                Console.WriteLine(error);
                 lista = new List<Usuario>();
             }
 
