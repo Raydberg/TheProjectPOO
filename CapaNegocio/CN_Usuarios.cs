@@ -14,7 +14,7 @@ namespace CapaNegocio
         private CD_Usuarios objCapaDato = new CD_Usuarios();
 
 
-        public List<Usuario> Listar()
+        public List<Usuario> Listar() 
         {
             return objCapaDato.Listar();
         }
@@ -65,12 +65,12 @@ namespace CapaNegocio
             }
             else if (string.IsNullOrEmpty(obj.Apellidos) || string.IsNullOrWhiteSpace(obj.Apellidos))
             {
-                Mensaje = "El nombre del usuario no puede ser vacio";
+                Mensaje = "El apellido del usuario no puede ser vacio";
 
             }
             else if (string.IsNullOrEmpty(obj.Correo) || string.IsNullOrWhiteSpace(obj.Correo))
             {
-                Mensaje = "El nombre del usuario no puede ser vacio";
+                Mensaje = "El Correo del usuario no puede ser vacio";
 
             }
             if (string.IsNullOrEmpty(Mensaje))

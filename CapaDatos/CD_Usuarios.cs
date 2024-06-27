@@ -81,6 +81,7 @@ namespace CapaDatos
                     oconexion.Open();
 
                     cmd.ExecuteNonQuery();
+
                     idautogenerado = Convert.ToInt32(cmd.Parameters["Resultado"].Value);
                     Mensaje = cmd.Parameters["Mensaje"].Value.ToString();
                 }

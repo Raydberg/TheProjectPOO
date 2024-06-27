@@ -178,22 +178,62 @@
 
         function Guardar() {
             var Usuario = {
+
                 idUsuario:$("#txtid").val(),
                 nombres: $("#txtnombres").val(),
                 apellidos: $("#txtapellidos").val(),
                 correo: $("#txtcorreo").val(),
                 activo: $("#cboactivo").val() == "1" ? true : false
-            }
-            // Ahora la comparación se hace correctamente como números
-            if (Usuario.idUsuario == 0) {
-                tabladata.row.add(Usuario).draw(false);
-            }
-            else {
 
-                tabladata.row(filaSeleccionada).data(Usuario).draw(false);
-              
             }
-            $('#FormModal').modal('hide');
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarUsuario", "Home")',
+                type: "POST",
+                data: JSON.stringify({ objeto: Usuario }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+
+                    // USUARIO NUEVO
+                    if (Usuario.idUsuario == 0) {
+
+                        if (data.resultado != 0) {
+
+                            Usuario.idUsuario = data.resultado;
+                            tabladata.row.add(Usuario).draw(false);
+                            $("#FormModal").modal("hide");
+                        
+                    } else{
+                        alert(data.mensaje)
+                    }
+
+
+                    }
+                    else {
+
+                        tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+
+                    }
+
+
+
+
+
+
+                },
+                error: function (error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+                },
+            });
+
+
+
+
+
         }
 
 

@@ -12,7 +12,7 @@ namespace CapaNegocio
         public static string CovertirSha256(string texto)
         {
             StringBuilder Sb = new StringBuilder();
-            using (SHA256 hash = SHA256.Create())
+            using (SHA256 hash = SHA256Managed.Create())
             {
                 Encoding enc = Encoding.UTF8;
                 byte[] result = hash.ComputeHash(enc.GetBytes(texto));
