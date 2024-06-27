@@ -60,13 +60,35 @@
             }
         })
 
-        tabladata = $("#tabla").DataTable();
+        tabladata = $("#tabla").DataTable({
+        responsive: true,
+        ordering: false,
+        "ajax":{
+         url:'@Url.Action("ListarUsuarios","Home")',
+         type:"GET",
+         dataTyoe: "json"
+         },
+
+
+         "columns":[
+         {"data":"Nombres"},
+         {"data":"Apellidos"},
+         {"data":"Correo"},
+         {
+          "data":"Activo","render":function(valor){
+         if (valor){
+         return '<span class="badge bg-sucess">Si</span>'
+         }else{
+         return '<span class="badge bg-danger">No</span>'
+         }
+
+       }
+    },
+         ]
+        });
 
 
     </script>
-
-
-
 
 }
 
