@@ -3,7 +3,9 @@
     ViewData["Title"] = "Usuario";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section Estilos{
+    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" rel="stylesheet" />
+}
 
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
@@ -41,21 +43,24 @@
 </div>
 
 @section scripts{
-    <script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
+
+            <script>
+
+        var tabladata;
 
         jQuery.ajax({
-            url : "@Url.Action("ListarUsuarios","Home")"
-            type: "GET"
-            dataType: "json"
-            contentType: "application/json; charset=utf-8"
+            url : '@Url.Action("ListarUsuarios","Home")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
         success: function (data) {
-            debugger;
-            var texto1="hola soy el texto 1"
-                console.log(data)
+            console.log(data)
             }
-
         })
 
+        tabladata = $("#tabla").DataTable();
 
 
     </script>

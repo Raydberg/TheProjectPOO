@@ -33,7 +33,7 @@ namespace TheProjectPOO.Controllers
             List<Usuario> oLista = new List<Usuario>();
             oLista= new CN_Usuarios().Listar();
 
-            return Json(oLista);
+            return Json( new { data= oLista } );
 
         }
 
