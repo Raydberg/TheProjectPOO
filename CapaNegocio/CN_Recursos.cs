@@ -22,7 +22,7 @@ namespace CapaNegocio
                     Sb.Append(b.ToString("x2"));
                 }
                 return Sb.ToString();
-            }
+            } 
         }
     }
 

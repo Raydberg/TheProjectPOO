@@ -172,6 +172,7 @@
           filaSeleccionada = $(this).closest("tr");
           var data =tabladata.row(filaSeleccionada).data();
           console.log(data)
+
           abrirModal(data)
 
         })
@@ -179,29 +180,28 @@
         function Guardar() {
             var Usuario = {
 
-                idUsuario:$("#txtid").val(),
-                nombres: $("#txtnombres").val(),
-                apellidos: $("#txtapellidos").val(),
-                correo: $("#txtcorreo").val(),
-                activo: $("#cboactivo").val() == "1" ? true : false
+                IdUsuario:$("#txtid").val(),
+                Nombres: $("#txtnombres").val(),
+                Apellidos: $("#txtapellidos").val(),
+                Correo: $("#txtcorreo").val(),
+                Activo: $("#cboactivo").val() == "1" ? true : false
 
             }
 
             jQuery.ajax({
                 url: '@Url.Action("GuardarUsuario", "Home")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Usuario }),
+                data: JSON.stringify({ objeto : Usuario }),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
 
-
                     // USUARIO NUEVO
-                    if (Usuario.idUsuario == 0) {
+                    if (Usuario.IdUsuario == 0) {
 
                         if (data.resultado != 0) {
 
-                            Usuario.idUsuario = data.resultado;
+                            Usuario.IdUsuario = data.resultado;
                             tabladata.row.add(Usuario).draw(false);
                             $("#FormModal").modal("hide");
                         
@@ -216,10 +216,6 @@
                         tabladata.row(filaSeleccionada).data(Usuario).draw(false);
 
                     }
-
-
-
-
 
 
                 },

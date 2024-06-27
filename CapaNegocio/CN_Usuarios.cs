@@ -43,7 +43,7 @@ namespace CapaNegocio
 
                 string clave = "test123";
                 obj.Clave = CN_Recursos.CovertirSha256(clave);
-
+                 
 
                 return objCapaDato.Registrar(obj, out Mensaje);
 
