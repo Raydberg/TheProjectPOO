@@ -185,15 +185,16 @@
           filaSeleccionada = $(this).closest("tr");
           var data =tabladata.row(filaSeleccionada).data();
           console.log(data)
+
           abrirModal(data)
 
         })
 
         function Guardar() {
-            var Usuario = {
 
-                idUsuario:$("#txtid").val(),
-                nombres: $("#txtnombres").val(),
+            var Usuario = {
+                idUsuario: $("#txtid").val(),
+                activo: $("#cboactivo").val() == 1 ? true:false,
                 apellidos: $("#txtapellidos").val(),
                 correo: $("#txtcorreo").val(),
                 activo: $("#cboactivo").val() == "1" ? true : false,
@@ -211,13 +212,12 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
 
-
                     // USUARIO NUEVO
-                    if (Usuario.idUsuario == 0) {
+                    if (Usuario.IdUsuario == 0) {
 
                         if (data.resultado != 0) {
 
-                            Usuario.idUsuario = data.resultado;
+                            Usuario.IdUsuario = data.resultado;
                             tabladata.row.add(Usuario).draw(false);
                             $("#FormModal").modal("hide");
                         
