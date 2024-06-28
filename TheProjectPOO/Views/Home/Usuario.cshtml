@@ -54,7 +54,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body g-2">
-                <input id="txtid" type="text" value="0" />
+                <input id="txtid" type="hidden" value="0" />
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="txtnombres" class="form-label">Nombres</label>
@@ -178,13 +178,13 @@
         })
 
         function Guardar() {
-            var Usuario = {
 
-                IdUsuario:$("#txtid").val(),
-                Nombres: $("#txtnombres").val(),
-                Apellidos: $("#txtapellidos").val(),
-                Correo: $("#txtcorreo").val(),
-                Activo: $("#cboactivo").val() == "1" ? true : false
+            var Usuario = {
+                idUsuario: $("#txtid").val(),
+                activo: $("#cboactivo").val() == 1 ? true:false,
+                apellidos: $("#txtapellidos").val(),
+                correo: $("#txtcorreo").val(),
+                nombres: $("#txtnombres").val()
 
             }
 

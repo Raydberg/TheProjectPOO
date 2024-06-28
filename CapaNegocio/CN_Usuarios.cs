@@ -24,7 +24,7 @@ namespace CapaNegocio
 
             if (string.IsNullOrEmpty(obj.Nombres) || string.IsNullOrWhiteSpace(obj.Nombres))
             {
-                Mensaje = "El nombre del usuario no puede ser vacio";
+                Mensaje = "El Padre del usuario no puede ser vacio";
 
             }
             else if (string.IsNullOrEmpty(obj.Apellidos) || string.IsNullOrWhiteSpace(obj.Apellidos))
