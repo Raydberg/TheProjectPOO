@@ -25,4 +25,7 @@ FechaRegistro datetime default getdate()*/
         public bool Activo { get; set; }
         
     }
+
+
+
 }

@@ -31,22 +31,23 @@ namespace TheProjectPOO.Controllers
         public JsonResult ListarUsuarios()
         {
             List<Usuario> oLista = new List<Usuario>();
-            oLista= new CN_Usuarios().Listar();
+            oLista = new CN_Usuarios().Listar();
 
-            return Json( new { data= oLista } );
+            return Json(new { data = oLista });
 
         }
         [HttpPost]
-        public JsonResult GuardarUsuario(Usuario objeto)
+        public JsonResult GuardarUsuario([FromBody] Usuario objeto)
         {
             object resultado;
             string mensaje = string.Empty;
 
-                if (objeto.IdUsuario == 0)
+            if (objeto.IdUsuario == 0)
             {
                 resultado = new CN_Usuarios().Registrar(objeto, out mensaje);
             }
-            else {
+            else
+            {
                 resultado = new CN_Usuarios().Editar(objeto, out mensaje);
             }
 

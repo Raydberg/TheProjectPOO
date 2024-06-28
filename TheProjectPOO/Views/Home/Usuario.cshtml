@@ -53,9 +53,9 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body g-2">
+            <div class="modal-body">
                 <input id="txtid" type="text" value="0" />
-                <div class="row">
+                <div class="row g-2">
                     <div class="col-sm-6">
                         <label for="txtnombres" class="form-label">Nombres</label>
                         <input type="text" class="form-control" id="txtnombres" placeholder=" ">
@@ -79,6 +79,17 @@
                             <option value="0">No</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="row mt">
+                    <div class="col-12">
+
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -153,6 +164,8 @@
             $("#txtcorreo").val("");
             $("#cboactivo").val(1);
 
+            $("#mensajeError").hide();
+
             if(json != null){
                 $("#txtid").val(json.idUsuario);
                 $("#txtnombres").val(json.nombres);
@@ -183,14 +196,17 @@
                 nombres: $("#txtnombres").val(),
                 apellidos: $("#txtapellidos").val(),
                 correo: $("#txtcorreo").val(),
-                activo: $("#cboactivo").val() == "1" ? true : false
+                activo: $("#cboactivo").val() == "1" ? true : false,
+                // clave: "",
+                // reestablecer: ""
 
             }
-
+            console.log(Usuario);
+            console.log(JSON.stringify(Usuario));
             jQuery.ajax({
                 url: '@Url.Action("GuardarUsuario", "Home")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Usuario }),
+                data: JSON.stringify(Usuario),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
@@ -206,20 +222,23 @@
                             $("#FormModal").modal("hide");
                         
                     } else{
-                        alert(data.mensaje)
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
                     }
 
 
                     }
                     else {
-
-                        tabladata.row(filaSeleccionada).data(Usuario).draw(false);
-
+                        if(data.resultado){
+                            tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+                            filaSeleccionada = null;
+                            $("#FormModal").modal("hide");
+                        } else{
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                        
                     }
-
-
-
-
 
 
                 },
