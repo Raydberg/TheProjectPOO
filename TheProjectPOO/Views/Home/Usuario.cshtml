@@ -211,11 +211,11 @@
                 success: function (data) {
 
                     // USUARIO NUEVO
-                    if (Usuario.IdUsuario == 0) {
+                    if (Usuario.idUsuario == 0) {
 
                         if (data.resultado != 0) {
 
-                            Usuario.IdUsuario = data.resultado;
+                            Usuario.idUsuario = data.resultado;
                             tabladata.row.add(Usuario).draw(false);
                             $("#FormModal").modal("hide");
                         
