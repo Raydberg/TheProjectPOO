@@ -185,6 +185,8 @@
             var usuarioSelecionado = $(this).closest("tr");
             var data = tabladata.row(usuarioSelecionado).data();
 
+            console.log(data);
+
             Swal.fire({
                 title: "Desea eliminar al Usuario?",
                 text: "No podras revertir esta accion!",
@@ -204,9 +206,8 @@
                    
 
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarUsuario", "Home")',
-                        type: "POST",
-                        data: JSON.stringify({id : idUsuario} ),
+                        url: '@Url.Action("EliminarUsuario", "Home")' + '?id='+ data.idUsuario,
+                        type: "DELETE",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {

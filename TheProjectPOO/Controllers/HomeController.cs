@@ -54,8 +54,9 @@ namespace TheProjectPOO.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje });
         }
 
-        [HttpPost]
-        public JsonResult EliminarUsuario([FromBody] int id)
+        [HttpDelete()]
+        //fromRoute: hace el parametro en la ruta para cuando mande paremetros como id
+        public JsonResult EliminarUsuario([FromQuery] int id)
         {
             bool respuesta = false;
             string mensaje = string.Empty;

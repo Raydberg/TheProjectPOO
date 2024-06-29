@@ -136,7 +136,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
                 {
-                    SqlCommand cmd = new SqlCommand("delete top(1) from usuario where IdUsuario = @id", oconexion);
+                    SqlCommand cmd = new SqlCommand("delete from usuario where IdUsuario = @Id", oconexion);
                     cmd.Parameters.AddWithValue("@Id", id);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
