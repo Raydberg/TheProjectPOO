@@ -53,9 +53,9 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body g-2">
+            <div class="modal-body">
                 <input id="txtid" type="hidden" value="0" />
-                <div class="row">
+                <div class="row g-2">
                     <div class="col-sm-6">
                         <label for="txtnombres" class="form-label">Nombres</label>
                         <input type="text" class="form-control" id="txtnombres" placeholder=" ">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <div class="row mt">
+                <div class="row mt-2">
                     <div class="col-12">
 
                         <div id="mensajeError" class="alert alert-danger" role="alert">
@@ -104,19 +104,9 @@
 
 @section scripts {
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 
     <script>
-        
-
-        // jQuery.ajax({
-        //     url : '@Url.Action("ListarUsuarios", "Home")',
-        //     type: "GET",
-        //     dataType: "json",
-        //     contentType: "application/json; charset=utf-8",
-        //     success: function (data) {
-        //         console.log(data); // Verifica la estructura de los datos aquí
-        //     }
-        // })
         var tabladata;
         var filaSeleccionada;
         tabladata = $("#tabla").DataTable({
@@ -163,7 +153,7 @@
             $("#txtapellidos").val("");
             $("#txtcorreo").val("");
             $("#cboactivo").val(1);
-
+            //OCULTAR MENSAJE DE ERROR
             $("#mensajeError").hide();
 
             if(json != null){
@@ -209,6 +199,9 @@
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    //OCULTAR LOADING
+                    $(".modal-body").LoadingOverlay("hide");
+
 
                     // USUARIO NUEVO
                     if (Usuario.idUsuario == 0) {
@@ -226,6 +219,7 @@
 
 
                     }
+                    //USUARIO EDITAR
                     else {
                         if(data.resultado){
                             tabladata.row(filaSeleccionada).data(Usuario).draw(false);
@@ -241,15 +235,21 @@
 
                 },
                 error: function (error) {
-                    console.log(error)
+                    $(".modal-body").LoadingOverlay("hide");
+                    $("#mensajeError").text("Error AJAX");
+                    $("#mensajeError").show();
                 },
                 beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show",{
+                        imageResizeFactor : 1.65 ,
+                        text:"Cargando....",
+                        size: 20,
+                        onresize:14
+
+                    
+                    })
                 },
             });
-
-
-
-
 
         }
 

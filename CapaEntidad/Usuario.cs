@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace CapaEntidad
 {
-    /*IdUsuario int primary key identity ,
-Nombres varchar(100),
-Apellidos varchar(100),
-Correo varchar(100),
-Clave varchar(150),
-Reestablecer bit default 1,
-Activo bit default 1,
-FechaRegistro datetime default getdate()*/
     public class Usuario
     {
         public int IdUsuario { get; set; }
