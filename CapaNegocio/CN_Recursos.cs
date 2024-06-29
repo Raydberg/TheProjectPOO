@@ -4,11 +4,22 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
+using System.Net;
+using System.Net.Mail;
 namespace CapaNegocio
 {
     public class CN_Recursos
     {
+
+        public static string GenerarClave()
+        {
+            string clave = Guid.NewGuid().ToString("N").Substring(0,6);
+            return clave;
+        }
+
+
+        //ENCRIPTADOR DE TEXTO A SHA256
         public static string CovertirSha256(string texto)
         {
             StringBuilder Sb = new StringBuilder();
@@ -23,6 +34,38 @@ namespace CapaNegocio
                 }
                 return Sb.ToString();
             } 
+        public static bool EnviarCorreo(string correo,string asunto,string mensaje)
+        {
+            bool resultado = false;
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.To.Add(correo);
+                mail.From = new MailAddress("raydga2005@gmail.com");//Poner correo de prueba
+                mail.Subject = asunto;
+                mail.Body = mensaje;
+                mail.IsBodyHtml = true;
+
+                var smtp = new SmtpClient()
+                {
+                    //VIDEO 13
+                    Credentials = new NetworkCredential("raydga2005@gmail.com","zqyt rtna xnld fsgo"),//Poner correo de prueba y contraseña generada por contraseña de aplicaciones
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true
+                };
+                smtp.Send(mail);
+                resultado = true;
+
+            }
+            catch (Exception ex)
+            {
+                resultado= false;
+            }
+            return resultado;
+        }
+
+
         }
     }
 

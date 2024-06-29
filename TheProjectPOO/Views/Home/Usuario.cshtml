@@ -215,14 +215,14 @@
                             if (data.resultado) {
                                 tabladata.row(usuarioSelecionado).remove().draw();
                             } else {
-                                //console.log(data.mensaje)
-                                // Swal.fire({
-                                //     icon: "error",
-                                //     title: "Error",
-                                //     text: "No se pudo eliminar el Usuario!",
-                                //     text:data.mensaje
+                                console.log(data.mensaje)
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "No se pudo eliminar el Usuario!",
+                                    text:data.mensaje
                                     
-                                // });
+                                });
                             }
 
                         },
