@@ -54,6 +54,16 @@ namespace TheProjectPOO.Controllers
             return Json(new { resultado = resultado, mensaje = mensaje });
         }
 
+        [HttpPost]
+        public JsonResult EliminarUsuario([FromBody] int id)
+        {
+            bool respuesta = false;
+            string mensaje = string.Empty;
+            respuesta = new CN_Usuarios().Eliminar(id,out mensaje);
+            return Json(new { resultado = respuesta, mensaje = mensaje });
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
