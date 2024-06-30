@@ -76,6 +76,13 @@ namespace TheProjectPOO.Controllers
         }
 
 
+        [HttpGet]
+        public JsonResult ListaReporte(string fechainicio,string fechafin , string idtransaccion)
+        {
+            List<Reporte> oLista = new List<Reporte>();
+           oLista = new CN_Reporte().Ventas(fechainicio,fechafin,idtransaccion);
+            return Json(new { data = oLista });
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
