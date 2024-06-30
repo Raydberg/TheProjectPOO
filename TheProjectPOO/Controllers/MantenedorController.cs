@@ -1,12 +1,21 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
-using CapaNegocio;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Globalization;
 
 namespace TheProjectPOO.Controllers
 {
     public class MantenedorController : Controller
     {
+        private readonly IConfiguration _configuration;
+
+        public MantenedorController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public IActionResult Categoria()
         {
             return View();
@@ -20,7 +29,7 @@ namespace TheProjectPOO.Controllers
             return View();
         }
 
-
+        //METODO CRUD CATEGORIA
         [HttpGet]
         public JsonResult ListarCategorias()
         {
@@ -58,7 +67,9 @@ namespace TheProjectPOO.Controllers
         }
 
 
-        //para marcaaaa
+        //METODO CRUD MARCA
+        #region MARCA
+
         [HttpGet]
         public JsonResult ListarMarca()
         {
@@ -94,8 +105,103 @@ namespace TheProjectPOO.Controllers
             respuesta = new CN_Marca().Eliminar(id, out mensaje);
             return Json(new { resultado = respuesta, mensaje = mensaje });
         }
+        #endregion
 
+        //METODOS CRUD PARA PRODUCTOS
+
+        #region PRODUCTO
+        [HttpGet]
+        public JsonResult ListarProducto()
+        {
+            List<Producto> oLista = new List<Producto>();
+            oLista = new CN_Producto().Listar();
+            return Json(new { data = oLista });
+
+        }
+        [HttpPost]
+        public async Task<JsonResult> GuardarProducto([FromBody] string objeto, IFormFile archivoImagen)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+            bool operacion_exitosa = true;
+            bool guardar_imagen_exitoso = true;
+
+            Producto oProducto = JsonConvert.DeserializeObject<Producto>(objeto);
+            decimal precio;
+
+            if (decimal.TryParse(oProducto.PrecioTexto, NumberStyles.AllowDecimalPoint, new CultureInfo("es-PE"), out precio))
+            {
+                oProducto.Precio = precio;
+            }
+            else
+            {
+                return Json(new { operacionExitosa = false, mensaje = "El formato del precio debe ser ##.##" });
+            }
+
+            if (oProducto.IdProducto == 0)
+            {
+                int idProductoGenerado = new CN_Producto().Registrar(oProducto, out mensaje);
+                if (idProductoGenerado != 0)
+                {
+                    oProducto.IdProducto = idProductoGenerado;
+                }
+                else
+                {
+                    operacion_exitosa = false;
+                }
+            }
+            else
+            {
+                operacion_exitosa = new CN_Producto().Editar(oProducto, out mensaje);
+            }
+
+            if (operacion_exitosa && archivoImagen != null)
+            {
+                string nombreCarpetaFotos = _configuration["Rutas:CarpetaFotos"];
+                string rutaGuardar = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", nombreCarpetaFotos);
+                string extension = Path.GetExtension(archivoImagen.FileName);
+                string nombre_imagen = string.Concat(oProducto.IdProducto.ToString(), extension);
+
+                // Verifica si la carpeta existe, si no, la crea
+                if (!Directory.Exists(rutaGuardar))
+                {
+                    Directory.CreateDirectory(rutaGuardar);
+                }
+
+                var filePath = Path.Combine(rutaGuardar, nombre_imagen);
+                try
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await archivoImagen.CopyToAsync(stream);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Considera manejar la excepción de manera adecuada
+                    operacion_exitosa = false;
+                    mensaje = "Error al guardar la imagen: " + ex.Message;
+                }
+                if (guardar_imagen_exitoso)
+                {
+                    oProducto.RutaImagen = rutaGuardar;
+                    oProducto.NombreImagen = nombre_imagen;
+                    bool rspta = new CN_Producto().GuardarDatosImagen(oProducto, out mensaje);
+
+                }
+                else
+                {
+                    mensaje = "Se guardo la imagen pero hubo error con la imagen";
+                }
+            }
+
+            return Json(new { operacionExitosa = operacion_exitosa, idGenerado = oProducto.IdProducto, mensaje = mensaje });
+        }
+
+
+        #endregion
 
 
     }
 }
+
