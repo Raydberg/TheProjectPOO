@@ -71,5 +71,14 @@ namespace TheProjectPOO.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+
+        public JsonResult VistaDashBoard()
+        {
+            DashBoard objeto = new CN_Reporte().VerDashBoard();
+
+            return Json(new { resultado = objeto });
+        }
     }
 }
