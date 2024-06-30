@@ -190,7 +190,7 @@
 
 
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarCategoria", "Mantenedor")' + '?id=' + data.IdCategoria,
+                        url: '@Url.Action("EliminarCategoria", "Mantenedor")' + '?id=' + data.idCategoria,
                         type: "DELETE",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
@@ -203,7 +203,7 @@
                                 Swal.fire({
                                     icon: "error",
                                     title: "Error",
-                                    text: "No se pudo eliminar el Usuario!",
+                                    text: "No se pudo eliminar la Categoria!",
                                     text: data.mensaje
 
                                 });
@@ -214,9 +214,6 @@
                             console.log(error)
                         }
                     });
-
-
-
 
                 }
             });

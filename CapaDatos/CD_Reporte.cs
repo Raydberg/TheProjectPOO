@@ -17,11 +17,10 @@ namespace CapaDatos
             try
             {
                 using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
-                {
-                   
+                {                  
 
                     SqlCommand cmd = new SqlCommand("sp_ReportesDashboard", oconexion);
-                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     oconexion.Open();
                     // El SqlDataReader lo que hara es poder leer los datos que se obtengan de la consulta
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -42,7 +41,7 @@ namespace CapaDatos
             catch (Exception ex)
             {
                 string error = ex.Message;
-                Console.WriteLine("Error al traer cliente de la base de datos");
+                Console.WriteLine("Error al traer reporte DashBoard de la base de datos");
                 Console.WriteLine(error);
                 objeto = new DashBoard();
             }

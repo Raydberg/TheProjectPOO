@@ -27,6 +27,7 @@ namespace TheProjectPOO.Controllers
         {
             return View();
         }
+        #region USUARIO
         [HttpGet]
         public JsonResult ListarUsuarios()
         {
@@ -63,6 +64,17 @@ namespace TheProjectPOO.Controllers
             respuesta = new CN_Usuarios().Eliminar(id,out mensaje);
             return Json(new { resultado = respuesta, mensaje = mensaje });
         }
+        #endregion
+
+
+        [HttpGet]
+        public JsonResult VistaDashBoard()
+        {
+            DashBoard objeto = new CN_Reporte().VerDashBoard();
+
+            return Json(new { resultado = objeto });
+        }
+
 
 
 
@@ -72,13 +84,6 @@ namespace TheProjectPOO.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet]
-
-        public JsonResult VistaDashBoard()
-        {
-            DashBoard objeto = new CN_Reporte().VerDashBoard();
-
-            return Json(new { resultado = objeto });
-        }
+       
     }
 }
