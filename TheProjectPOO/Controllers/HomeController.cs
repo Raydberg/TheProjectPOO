@@ -86,6 +86,7 @@ namespace TheProjectPOO.Controllers
             return Json(new { data = oLista });
         }
 
+
         [HttpPost]
 
         public FileResult ExportarVenta(string fechainicio, string fechafin, string idtransaccion)
