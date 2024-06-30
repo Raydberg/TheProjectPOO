@@ -65,7 +65,7 @@
                             <img id="img_producto" height="197" width="200" class="border rounded mx-auto d-block img-fluid"/>
                         </div>
                         <div class="mb-2">
-                            <input class="form-control" type="file" id="fileProducto" accept="image/png,image/jpg, image/jpeg" onchange=""/>
+                            <input class="form-control" type="file" id="fileProducto" accept="image/png,image/jpg, image/jpeg" onchange="mostrarImagen(this)" />
                         </div>
                     </div>
 
@@ -145,6 +145,20 @@
     <script>
         var tabladata;
         var filaSeleccionada;
+
+        function mostrarImagen(input){
+            if(input.files){
+                var reader = new FileReader();
+
+                reader.onload = function(e){
+                    $("#img_producto").attr("src",e.target.result).width(200).height(197)
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+
         tabladata = $("#tabla").DataTable({
             responsive: true,
             ordering: false,
@@ -181,17 +195,70 @@
 
         });
 
+        jQuery.ajax({
+            url: '@Url.Action("ListarMarca", "Mantenedor")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+
+               $("<option>").attr({ "value": "0","disabled":"true"}).text("Seleccionar").appendTo("#cbomarca");
+               $.each(data.data, function (index, valor) {
+
+                            $("<option>").attr({ "value": valor.idMarca }).text(valor.descripcion).appendTo("#cbomarca");
+                        })
+        },
+            error: function (error) {
+                console.log(error)
+            }
+           });
+
+
+        jQuery.ajax({
+            url: '@Url.Action("ListarCategorias", "Mantenedor")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocategoria");
+                $.each(data.data, function (index, valor) {
+
+                    $("<option>").attr({ "value": valor.idCategoria }).text(valor.descripcion).appendTo("#cbocategoria");
+                })
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+
+
         function abrirModal(json) {
 
             $("#txtid").val(0);
+            $("#img_producto").removeAttr("src");
+            $("#fileProducto").val("");
+            $("#txtnombre").val("");
             $("#txtdescripcion").val("");
+            $("#cbomarca").val($("#cbomarca option:first").val());
+            $("#cbocategoria").val($("#cbocategoria option:first").val());
+            $("#txtprecio").val("");
+            $("#txtstock").val("");
             $("#cboactivo").val(1);
             //OCULTAR MENSAJE DE ERROR
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(json.idMarca);
-                $("#txtdescripcion").val(json.descripcion);
+
+                $("#txtid").val(json.IdProducto);
+                $("#txtnombre").val(json.Nombre);
+                $("#txtdescripcion").val(json.Descripcion);
+                $("#cbomarca").val(json.oMarca.IdMarca);
+                $("#cbocategoria").val(json.oCategoria.IdCategoria);
+                $("#txtprecio").val(json.Precio);
+                $("#txtstock").val(json.Stock);
                 $("#cboactivo").val(json.activo == true ? 1 : 0);
             }
 
@@ -275,33 +342,54 @@
 
         function Guardar() {
 
-            var Marca = {
-                idMarca: $("#txtid").val(),
-                activo: $("#cboactivo").val() == 1 ? true : false,
-                descripcion: $("#txtdescripcion").val()
+            var ImagenSeleccionada = $("#fileProducto")[0].files[0];
 
+
+
+
+            var Producto = {
+                idProducto: $("#txtid").val(),
+                nombre: $("#textnombre").val(),
+                descripcion: $("#txtdescripcion").val(),
+                oMarca: {
+                    idMarca: $("#cbomarca option:selected").val(),
+                    descripcion: $("#cbomarca option:selected").text(),
+                },
+                oCategoria: {
+                    idCategoria: $("#cbocategoria option:selected").val(),
+                    descripcion: $("#cbocategoria option:selected").text(),
+                },
+                precioTexto: $("#txtprecio").val(),
+                precio: $("#txtprecio").val(),
+                stock: $("#txtstock").val(),
+                activo: $("#cboactivo").val() == 1 ? true : false,
 
             }
-            console.log(Marca);
-            console.log(JSON.stringify(Marca));
+
+            var request = new FormData();
+            request.append("objeto", JSON.stringify(Producto));
+            request.append("archivoimagen", ImagenSeleccionada)
+
+
+
             jQuery.ajax({
-                url: '@Url.Action("GuardarMarca", "Mantenedor")',
+                url: '@Url.Action("GuardarProducto", "Mantenedor")',
                 type: "POST",
-                data: JSON.stringify(Marca),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+                data: request,
+                processData:false,
+                contentType:false,
                 success: function (data) {
                     //OCULTAR LOADING
                     $(".modal-body").LoadingOverlay("hide");
 
 
-                    // categoria NUEVO
-                    if (Marca.idMarca == 0) {
+                    // Producto NUEVO
+                    if (Producto.idProducto == 0) {
 
-                        if (data.resultado != 0) {
+                        if (data.idGenerado != 0) {
 
-                            Marca.idMarca = data.resultado;
-                            tabladata.row.add(Marca).draw(false);
+                            Producto.idProducto = data.idGenerado;
+                            tabladata.row.add(Producto).draw(false);
                             $("#FormModal").modal("hide");
 
                         } else {
@@ -311,10 +399,10 @@
 
 
                     }
-                    //USUARIO EDITAR
+                    //producto EDITAR
                     else {
-                        if (data.resultado) {
-                            tabladata.row(filaSeleccionada).data(Marca).draw(false);
+                        if (data.operacionExitosa) {
+                            tabladata.row(filaSeleccionada).data(Producto.draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {
