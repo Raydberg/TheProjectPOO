@@ -28,7 +28,7 @@ namespace TheProjectPOO.Controllers
         {
             return View();
         }
-
+        #region CATEGORIA
         //METODO CRUD CATEGORIA
         [HttpGet]
         public JsonResult ListarCategorias()
@@ -65,7 +65,7 @@ namespace TheProjectPOO.Controllers
             respuesta = new CN_Categoria().Eliminar(id, out mensaje);
             return Json(new { resultado = respuesta, mensaje = mensaje });
         }
-
+        #endregion
 
         //METODO CRUD MARCA
         #region MARCA
@@ -198,6 +198,29 @@ namespace TheProjectPOO.Controllers
             return Json(new { operacionExitosa = operacion_exitosa, idGenerado = oProducto.IdProducto, mensaje = mensaje });
         }
 
+        [HttpPost]
+        public JsonResult ImagenProducto(int id)
+        {
+            bool conversion;
+            Producto oproducto = new CN_Producto().Listar().Where(p => p.IdProducto == id).FirstOrDefault();
+
+            string textoBase64 = CN_Recursos.ConvertirBase64(Path.Combine(oproducto.RutaImagen, oproducto.NombreImagen), out conversion);
+
+            return Json(new
+            {
+                conversion = conversion,
+                textoBase64 = textoBase64,
+                extension = Path.GetExtension(oproducto.NombreImagen)
+            });
+        }
+        [HttpDelete()]
+        public JsonResult EliminarProducto([FromQuery] int id)
+        {
+            bool respuesta = false;
+            string mensaje = string.Empty;
+            respuesta = new CN_Producto().Eliminar(id, out mensaje);
+            return Json(new { resultado = respuesta, mensaje = mensaje });
+        }
 
         #endregion
 

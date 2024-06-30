@@ -14,7 +14,7 @@ namespace CapaNegocio
 
         public static string GenerarClave()
         {
-            string clave = Guid.NewGuid().ToString("N").Substring(0,6);
+            string clave = Guid.NewGuid().ToString("N").Substring(0, 6);
             return clave;
         }
 
@@ -29,12 +29,12 @@ namespace CapaNegocio
                 byte[] result = hash.ComputeHash(enc.GetBytes(texto));
 
                 foreach (byte b in result)
-                
+
                     Sb.Append(b.ToString("x2"));
-                }
-                return Sb.ToString();
-            } 
-        public static bool EnviarCorreo(string correo,string asunto,string mensaje)
+            }
+            return Sb.ToString();
+        }
+        public static bool EnviarCorreo(string correo, string asunto, string mensaje)
         {
             bool resultado = false;
             try
@@ -60,12 +60,27 @@ namespace CapaNegocio
             }
             catch (Exception ex)
             {
-                resultado= false;
+                resultado = false;
             }
             return resultado;
         }
+        public static string ConvertirBase64(string ruta, out bool conversion)
+        {
+            string textoBase64 = string.Empty;
+            conversion = true;
 
+            try
+            {
+                byte[] bytes = File.ReadAllBytes(ruta);
+                textoBase64 = Convert.ToBase64String(bytes);
+            }
+            catch 
+            {
+                conversion = false;
+            }
+            return textoBase64;
 
         }
     }
+}
 
