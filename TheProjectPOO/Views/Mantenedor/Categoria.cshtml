@@ -46,12 +46,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Categoria</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
-                <input id="txtid" type="hidden" value="0" />
+                <input id="txtid" type="text" value="0" />
 
                 <div class="row g-1">
                    
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Activo</label>
+                        <label for="cboactivo" class="form-label">Activo</label>
                         <select id="cboactivo" class="form-select">
 
                             <option value="1">Si</option>
@@ -103,14 +103,13 @@
             responsive: true,
             ordering: false,
             "ajax": {
-                url: '@Url.Action("ListarUsuarios", "Home")',
+                url: '@Url.Action("ListarCategorias", "Mantenedor")',
                 type: "GET",
                 dataType: "json"
             },
             "columns": [
-                { "data": "nombres" },
-                { "data": "apellidos" },
-                { "data": "correo" },
+                { "data": "descripcion" },
+               
                 {
                     "data": "activo",
                     "render": function (valor) {
@@ -139,18 +138,14 @@
         function abrirModal(json) {
 
             $("#txtid").val(0);
-            $("#txtnombres").val("");
-            $("#txtapellidos").val("");
-            $("#txtcorreo").val("");
+            $("#txtdescripcion").val("");
             $("#cboactivo").val(1);
             //OCULTAR MENSAJE DE ERROR
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(json.idUsuario);
-                $("#txtnombres").val(json.nombres);
-                $("#txtapellidos").val(json.apellidos);
-                $("#txtcorreo").val(json.correo);
+                $("#txtid").val(json.idCategoria);
+                $("#txtdescripcion").val(json.descripcion);
                 $("#cboactivo").val(json.activo == true ? 1 : 0);
             }
 
@@ -171,13 +166,13 @@
         //FUNCION PARA LLAMAR AL BTN-ELIMINAR
         $("#tabla tbody").on("click", '.btn-eliminar', function () {
 
-            var usuarioSelecionado = $(this).closest("tr");
-            var data = tabladata.row(usuarioSelecionado).data();
+            var categoriaSelecionado = $(this).closest("tr");
+            var data = tabladata.row(categoriaSelecionado).data();
 
             console.log(data);
 
             Swal.fire({
-                title: "Desea eliminar al Usuario?",
+                title: "Desea eliminar la categoria?",
                 text: "No podras revertir esta accion!",
                 icon: "warning",
                 showCancelButton: true,
@@ -189,20 +184,20 @@
                 if (result.isConfirmed) {
                     Swal.fire({
                         title: "Eliminado!",
-                        text: "Usted a eliminado a este Usuario.",
+                        text: "Usted a eliminado a esta categoria.",
                         icon: "success"
                     });
 
 
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarUsuario", "Home")' + '?id=' + data.idUsuario,
+                        url: '@Url.Action("EliminarCategoria", "Mantenedor")' + '?id=' + data.IdCategoria,
                         type: "DELETE",
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
                         success: function (data) {
 
                             if (data.resultado) {
-                                tabladata.row(usuarioSelecionado).remove().draw();
+                                tabladata.row(categoriaSelecionado).remove().draw();
                             } else {
                                 console.log(data.mensaje)
                                 Swal.fire({
@@ -234,20 +229,19 @@
 
         function Guardar() {
 
-            var Usuario = {
-                idUsuario: $("#txtid").val(),
+            var Categoria = {
+                idCategoria: $("#txtid").val(),
                 activo: $("#cboactivo").val() == 1 ? true : false,
-                apellidos: $("#txtapellidos").val(),
-                correo: $("#txtcorreo").val(),
-                nombres: $("#txtnombres").val()
+                descripcion: $("#txtdescripcion").val()
+             
 
             }
-            console.log(Usuario);
-            console.log(JSON.stringify(Usuario));
+            console.log(Categoria);
+            console.log(JSON.stringify(Categoria));
             jQuery.ajax({
-                url: '@Url.Action("GuardarUsuario", "Home")',
+                url: '@Url.Action("GuardarCategoria", "Mantenedor")',
                 type: "POST",
-                data: JSON.stringify(Usuario),
+                data: JSON.stringify(Categoria),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
@@ -255,13 +249,13 @@
                     $(".modal-body").LoadingOverlay("hide");
 
 
-                    // USUARIO NUEVO
-                    if (Usuario.idUsuario == 0) {
+                    // categoria NUEVO
+                    if (Categoria.idCategoria== 0) {
 
                         if (data.resultado != 0) {
 
-                            Usuario.idUsuario = data.resultado;
-                            tabladata.row.add(Usuario).draw(false);
+                            Categoria.idCategoria = data.resultado;
+                            tabladata.row.add(Categoria).draw(false);
                             $("#FormModal").modal("hide");
 
                         } else {
@@ -274,7 +268,7 @@
                     //USUARIO EDITAR
                     else {
                         if (data.resultado) {
-                            tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+                            tabladata.row(filaSeleccionada).data(Categoria).draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {

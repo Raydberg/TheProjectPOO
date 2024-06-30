@@ -20,6 +20,7 @@ namespace TheProjectPOO.Controllers
             return View();
         }
 
+
         [HttpGet]
         public JsonResult ListarCategorias()
         {
@@ -48,12 +49,49 @@ namespace TheProjectPOO.Controllers
         }
 
         [HttpDelete()]
-        //fromRoute: hace el parametro en la ruta para cuando mande paremetros como id
         public JsonResult EliminarCategoria([FromQuery] int id)
         {
             bool respuesta = false;
             string mensaje = string.Empty;
             respuesta = new CN_Categoria().Eliminar(id, out mensaje);
+            return Json(new { resultado = respuesta, mensaje = mensaje });
+        }
+
+
+        //para marcaaaa
+        [HttpGet]
+        public JsonResult ListarMarca()
+        {
+            List<Marca> oLista = new List<Marca>();
+            oLista = new CN_Marca().Listar();
+            return Json(new { data = oLista });
+
+        }
+
+        [HttpPost]
+        public JsonResult GuardarMarca([FromBody] Marca objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+
+            if (objeto.IdMarca == 0)
+            {
+                resultado = new CN_Marca().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Marca().Editar(objeto, out mensaje);
+            }
+
+            return Json(new { resultado = resultado, mensaje = mensaje });
+        }
+
+        [HttpDelete()]
+        public JsonResult EliminarMarca([FromQuery] int id)
+        {
+            bool respuesta = false;
+            string mensaje = string.Empty;
+            respuesta = new CN_Marca().Eliminar(id, out mensaje);
             return Json(new { resultado = respuesta, mensaje = mensaje });
         }
 
