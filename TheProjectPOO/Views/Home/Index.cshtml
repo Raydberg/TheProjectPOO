@@ -79,7 +79,7 @@
 
     <div class="card-body">
 
-        <form>
+        <form action="@Url.Action("ExportarVenta","Home")" method="post">
             <div class="row align-items-lg-end">
                 <div class="col-sm-2">
                     <div class="mb-2">
@@ -148,26 +148,69 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
 
-        $("#txtfechainicio").datepicker({dateFormat:'dd/mm/yy'}).datepicker('setDate', new Date());
-        $("#txtfechafin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+        var tabladata;
+
+        $(document).ready(function(){
+
+            $("#txtfechainicio").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+            $("#txtfechafin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
 
 
-        jQuery.ajax({
-            url: '@Url.Action("VistaDashBoard", "Home")',
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
+            jQuery.ajax({
+                url: '@Url.Action("VistaDashBoard", "Home")',
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
 
-                var objeto = data.resultado;
-                $("#totalclientes").text(objeto.totalCliente)
-                $("#totalventas").text(objeto.totalVenta)
-                $("#totalproducto").text(objeto.totalProducto)
+                    var objeto = data.resultado;
+                    $("#totalclientes").text(objeto.totalCliente)
+                    $("#totalventas").text(objeto.totalVenta)
+                    $("#totalproducto").text(objeto.totalProducto)
 
-           
+                }
+            });
+            //fechainicio,fechafin,idtransaccion
+            var Url = '@Url.Action("ListarReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtransaccion=" + $("#txtidtransaccion").val();
 
-            }            
-        });
+            tabladata = $("#tabla").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: Url,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    { "data": "fechaVenta" },
+                    { "data": "cliente" },
+                    { "data": "producto" },
+                    { "data": "precio" },
+                    { "data": "cantidad" },
+                    { "data": "total" },
+                    { "data": "idTransaccion" }
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-MX.json"
+                }
+
+
+            });
+
+        })
+
+       $("#btnbuscar").on("click",function(){
+            var nueva_url = '@Url.Action("ListarReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtransaccion=" + $("#txtidtransaccion").val();
+
+           tabladata.ajax.url(nueva_url).load();
+
+       })
 
     </script>
 

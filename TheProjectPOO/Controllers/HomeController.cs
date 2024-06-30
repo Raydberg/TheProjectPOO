@@ -3,6 +3,8 @@ using System.Diagnostics;
 using TheProjectPOO.Models;
 using CapaEntidad;
 using CapaNegocio;
+using System.Data;
+using ClosedXML.Excel;
 namespace TheProjectPOO.Controllers
 {
     public class HomeController : Controller
@@ -83,6 +85,56 @@ namespace TheProjectPOO.Controllers
            oLista = new CN_Reporte().Ventas(fechainicio,fechafin,idtransaccion);
             return Json(new { data = oLista });
         }
+
+        [HttpPost]
+
+        public FileResult ExportarVenta(string fechainicio, string fechafin, string idtransaccion)
+        {
+            List<Reporte> oLista = new List<Reporte>();
+            oLista = new CN_Reporte().Ventas(fechainicio, fechafin, idtransaccion);
+            DataTable dt = new DataTable();
+
+            dt.Locale= new System.Globalization.CultureInfo("en-PE");
+            dt.Columns.Add("FechaVenta", typeof(string));
+            dt.Columns.Add("Cliente", typeof(string));
+            dt.Columns.Add("Producto", typeof(string));
+            dt.Columns.Add("Precio", typeof(decimal));
+            dt.Columns.Add("Cantidad", typeof(int));
+            dt.Columns.Add("Total", typeof(decimal));
+            dt.Columns.Add("IdTransaccion", typeof(string));
+
+            foreach (Reporte rp in  oLista) {
+                dt.Rows.Add( new object[]
+                {
+                    rp.FechaVenta,
+                    rp.FechaVenta,
+                    rp.Cliente,
+                    rp.Producto,
+                    rp.Precio,
+                    rp.Cantidad,
+                    rp.Total,
+                    rp.IdTransaccion
+                });
+            }
+
+            dt.TableName = "Datos";
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Especificando que el tipo de archivo es un excel y en el otro parametro el nombre del archivo
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteVentas"+ DateTime.Now.ToString()+ ".xlsx" );
+                }
+            }
+
+
+        }
+
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
