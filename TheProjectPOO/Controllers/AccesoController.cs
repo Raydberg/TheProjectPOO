@@ -89,11 +89,38 @@ namespace TheProjectPOO.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult Reestablecer(string correo)
+        {
+            Usuario ousuario = new Usuario();
+            ousuario = new CN_Usuarios().Listar().Where(item => item.Correo == correo).FirstOrDefault();
+
+            if (ousuario == null)
+            {
+                ViewBag.Error = "No se encontro un usuario relacionado a ese correo";
+                return View();
+            }
+
+            string mensaje = string.Empty;
+            bool respuesta = new CN_Usuarios().ReestablecerClave(ousuario.IdUsuario, correo, out mensaje);
+
+            if (respuesta) { 
+                ViewBag.Error = null;
+                return RedirectToAction("Index", "Acceso");
+            }
+            else
+            {
+                ViewBag.Error = mensaje;
+                return View();
+            }
 
 
+        }
 
-
-
+        public IActionResult CerrarSesion()
+        {
+            return RedirectToAction("Index", "Acceso");
+        }
 
     }
 }
