@@ -130,7 +130,7 @@ namespace TheProjectPOO.Controllers
             Producto oProducto = JsonConvert.DeserializeObject<Producto>(item.objeto);
             decimal precio;
 
-            if (decimal.TryParse(oProducto.PrecioTexto, NumberStyles.AllowDecimalPoint, new CultureInfo("es-PE"), out precio))
+            if (decimal.TryParse(oProducto.Precio.ToString(), NumberStyles.AllowDecimalPoint, new CultureInfo("es-PE"), out precio))
             {
                 oProducto.Precio = precio;
             }
