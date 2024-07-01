@@ -19,8 +19,11 @@ namespace TheProjectPOO.Controllers
         {
             return View();
         }
+
+
+
         [HttpPost]
-        public IActionResult Index(string correo,string clave)
+        public IActionResult Index(string correo, string clave)
         {
             Usuario oUsuario = new Usuario();
 
@@ -29,6 +32,7 @@ namespace TheProjectPOO.Controllers
             if (oUsuario == null)
             {
                 ViewBag.Error = "Correo o Clave incorrecta";
+                return View();
             }
             else
             {
@@ -38,22 +42,21 @@ namespace TheProjectPOO.Controllers
                     return RedirectToAction("CambiarClave");
                 }
 
-
-
                 ViewBag.Error = null;
 
                 return RedirectToAction("Index", "Home");
             }
-
+            
         }
+
         [HttpPost]
-        public ActionResult CambiarClave(string idusuario, string claveactual, string nuevaclave, string confirmarclave)
+        public IActionResult CambiarClave(string idusuario, string claveactual, string nuevaclave, string confirmarclave)
         {
             Usuario oUsuario = new Usuario();
 
             oUsuario = new CN_Usuarios().Listar().Where(u => u.IdUsuario == int.Parse(idusuario)).FirstOrDefault();
 
-            if(oUsuario.Clave != CN_Recursos.ConvertirSha256(claveactual))
+            if(oUsuario.Clave != CN_Recursos.CovertirSha256(claveactual))
             {
                 TempData["IdUsuario"] = idusuario;
                 ViewData["vclave"] = "";
@@ -69,7 +72,7 @@ namespace TheProjectPOO.Controllers
             }
 
             ViewData["vclave"] = "";
-            nuevaclave = CN_Recursos.ConvertirSha256(nuevaclave);
+            nuevaclave = CN_Recursos.CovertirSha256(nuevaclave);
             string mensaje = string.Empty;
             bool respuesta = new CN_Usuarios().CambiarClave(int.Parse(idusuario),nuevaclave,out mensaje);
             if (respuesta)
@@ -84,8 +87,13 @@ namespace TheProjectPOO.Controllers
                 return View();
             }
 
-
-            return View();
         }
+
+
+
+
+
+
+
     }
 }
