@@ -202,7 +202,7 @@ namespace TheProjectPOO.Controllers
         }
 
         [HttpPost]
-        public JsonResult ImagenProducto(int id)
+        public JsonResult ImagenProducto([FromQuery] int id)
         {
             bool conversion;
             Producto oproducto = new CN_Producto().Listar().Where(p => p.IdProducto == id).FirstOrDefault();

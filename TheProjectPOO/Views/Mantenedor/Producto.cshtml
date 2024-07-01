@@ -276,14 +276,28 @@
 
             if (json != null) {
 
-                $("#txtid").val(json.IdProducto);
-                $("#txtnombre").val(json.Nombre);
-                $("#txtdescripcion").val(json.Descripcion);
-                $("#cbomarca").val(json.oMarca.IdMarca);
-                $("#cbocategoria").val(json.oCategoria.IdCategoria);
-                $("#txtprecio").val(json.Precio);
-                $("#txtstock").val(json.Stock);
+                $("#txtid").val(json.idProducto);
+                $("#txtnombre").val(json.nombre);
+                $("#txtdescripcion").val(json.descripcion);
+                $("#cbomarca").val(json.oMarca.idMarca);
+                $("#cbocategoria").val(json.oCategoria.idCategoria);
+                $("#txtprecio").val(json.precio);
+                $("#txtstock").val(json.stock);
                 $("#cboactivo").val(json.activo == true ? 1 : 0);
+
+                
+                jQuery.ajax({
+                    url: '@Url.Action("ImagenProducto", "Mantenedor")'+ '?id=' + json.idProducto,
+                    type: "POST",
+                    data: null,
+                    contentType: "application/json; charset=utf-8",
+                    success:  function(data) {
+                        if (data.conversion) {
+                            $("#img_producto").attr({ "src": "data:image/" + data.extension + ";base64," + data.textoBase64 });
+                        }
+                    },
+
+                });
 
 
             }
@@ -385,7 +399,6 @@
                     idCategoria: $("#cbocategoria option:selected").val(),
                     descripcion: $("#cbocategoria option:selected").text(),
                 },
-                precioTexto: $("#txtprecio").val(),
                 precio: $("#txtprecio").val(),
                 stock: $("#txtstock").val(),
                 activo: $("#cboactivo").val() == 1 ? true : false,
