@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StylesFooter.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-primary">
     <div id="layoutAuthentication">
@@ -23,33 +24,34 @@
                             <div class="card mt-5 rounded-lg border-0 shadow-lg">
                                 <div class="card-header"><h3 class="font-weight-light my-4 text-center">Cambiar Contraseña</h3></div>
                                 <div class="card-body">
-                                    <form action="@Url.Action("CambiarClave", "Acceso")" method="post">
-
-                                        <input class="form-control" type="text" value="@TempData["IdUsuario"]" name="idusuario"/>
-                                     
+                                    <form action="@Url.Action("CambiarClave","Acceso")" method="post">
+                                        <input class="form-control" type="text" value="@TempData["IdUsuario"]" name="idusuario"/>                                     
                                         <div class="row mb-3">
                                             <div class="col-md-12">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPassword" type="password" name="claveactual" value="@ViewData["vclave"]" placeholder=" " />
-                                                    <label for="inputPassword">Contraseña Actual</label>
+                                                <div class="form-floating mb-3 mb-md-0 input-icon">
+                                                    <input class="form-control password-field" type="password" name="claveactual" placeholder=" " />
+                                                    <label>Contraseña Actual</label>
+                                                    <i class="bi bi-eye-slash toggle-password"></i>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <div class="col-md-12">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPassword" type="password" name="nuevaclave" placeholder=" "  />
-                                                    <label for="inputPassword">Nueva Contraseña</label>
+                                                <div class="form-floating mb-3 mb-md-0 input-icon">
+                                                    <input class="form-control password-field" type="password" name="nuevaclave" placeholder=" " />
+                                                    <label>Nueva Contraseña</label>
+                                                    <i class="bi bi-eye-slash toggle-password"></i>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
                                             <div class="col-md-12">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPassword" type="password"  name="confirmarclave" placeholder=" "/>
-                                                    <label for="inputPassword">Confirmar Nueva Contraseña</label>
+                                                <div class="form-floating mb-3 mb-md-0 input-icon">
+                                                    <input class="form-control password-field" type="password" name="confirmarclave" placeholder=" " />
+                                                    <label>Confirmar Nueva Contraseña</label>
+                                                    <i class="bi bi-eye-slash toggle-password"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,7 +70,11 @@
                                         }
 
                                         <div class="mt-4 mb-0">
-                                            <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Cambiar Contraseña</button></div>
+                                            <div class="d-grid">
+
+                                                <button  class="btn btn-primary btn-block" type="submit">Cambiar Contraseña</button>
+
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -140,8 +146,24 @@
         </div>
 
     </footer>
-
-
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.toggle-password').forEach(item => {
+                item.addEventListener('click', function () {
+                    // Subimos al contenedor .input-icon y buscamos el input dentro de este contenedor
+                    let passwordInput = this.parentElement.querySelector('.password-field');
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    // Alternamos las clases para cambiar el icono
+                    this.classList.toggle('bi-eye');
+                    this.classList.toggle('bi-eye-slash');
+                });
+            });
+        });
+    </script>
+
+
 </body>
 </html>

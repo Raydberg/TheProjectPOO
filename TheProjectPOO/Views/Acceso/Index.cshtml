@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -12,7 +11,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StylesFooter.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ </head>
 <body class="bg-primary">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
@@ -23,29 +23,24 @@
                             <div class="card mt-5 rounded-lg border-0 shadow-lg">
                                 <div class="card-header"><h3 class="font-weight-light my-4 text-center">Login</h3></div>
                                 <div class="card-body">
-
-
-                                    <form action="@Url.Action("Index","Acceso")" method="post">
+                                    <form action="@Url.Action("Index","Acceso")" method="post" id="loginForm">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="text" placeholder=" " name="correo"  />
+                                            <input class="form-control" id="inputEmail" type="email" placeholder=" " name="correo" required />
                                             <label for="inputEmail">Email</label>
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password" placeholder=" " name="clave" />
+                                        <div class="form-floating mb-3 input-icon">
+                                            <input class="form-control" id="inputPassword" type="password" placeholder=" " name="clave" required />
                                             <label for="inputPassword">Contraseña</label>
+                                            <i class="bi bi-eye-slash" id="togglePassword"></i>
                                         </div>
-
-                                        @{
-                                            if (ViewBag.Error != null)
-                                            {
-                                                <div class="form-floating mb-3">
-                                                    <div class="alert alert-danger" role="alert">
-                                                        @ViewBag.Error
-                                                    </div>
+                                        @if (ViewBag.Error != null)
+                                        {
+                                            <div class="form-floating mb-3">
+                                                <div class="alert alert-danger" role="alert">
+                                                    @ViewBag.Error
                                                 </div>
-                                            }
+                                            </div>
                                         }
-
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="password.html">¿Has olvidado tu contraseña?</a>
                                             <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
@@ -53,7 +48,6 @@
                                     </form>
                                 </div>
                                 <div class="card-footer py-3 text-center">
-                                    
                                 </div>
                             </div>
                         </div>
@@ -61,12 +55,8 @@
                 </div>
             </main>
         </div>
-        <div id="layoutAuthentication_footer">
-            
-        </div>
     </div>
-
-    <footer >
+    <footer>
         <div class="background">
             <svg version="1.1"
                  xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +70,7 @@
                     <path id="wave"
                           fill="rgba(105, 27, 252, 0.6)"
                           d="M-363.852,502.589c0,0,236.988-41.997,505.475,0
-      s371.981,38.998,575.971,0s293.985-39.278,505.474,5.859s493.475,48.368,716.963-4.995v560.106H-363.852V502.589z" />
+  s371.981,38.998,575.971,0s293.985-39.278,505.474,5.859s493.475,48.368,716.963-4.995v560.106H-363.852V502.589z" />
                 </defs>
                 <g>
                     <use xlink:href="#wave" opacity=".4">
@@ -122,6 +112,19 @@
 
     </footer>
 
-   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-   </body>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            const password = document.getElementById('inputPassword');
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('bi-eye');
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            // Aquí puedes añadir validaciones adicionales si es necesario
+        });
+    </script>
+</body>
 </html>
