@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CapaEntidad;
 using CapaNegocio;
+using DocumentFormat.OpenXml.Wordprocessing;
+
+using CapaEntidad;
+using CapaNegocio;
+
 namespace TheProjectPOO.Controllers
 {
     public class AccesoController : Controller

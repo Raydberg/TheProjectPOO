@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace TheProjectPOO
 {
     public class Program
@@ -11,6 +13,16 @@ namespace TheProjectPOO
 
             var app = builder.Build();
 
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Acceso/Login";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                });
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -19,6 +31,8 @@ namespace TheProjectPOO
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
