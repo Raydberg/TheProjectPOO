@@ -4,6 +4,7 @@
 
 @section Estilos {
     <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.3/themes/base/jquery-ui.min.css" integrity="sha512-8PjjnSP8Bw/WNPxF6wkklW6qlQJdWJc/3w/ZQPvZ/1bjVDkrrSqLe9mfPYrMxtnzsXFPc434+u4FHLnLjXTSsg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 }
 
 <h1 class="mt-4">Dashboard</h1>
@@ -23,7 +24,7 @@
 
                     </div>
                     <div class="col-sm-3">
-                        <i class="fas  fa-user fa-2x"></i>
+                        <i class="fas fa-user fa-2x"></i>
 
                     </div>
                 </div>
@@ -41,7 +42,7 @@
                         <h6 id="totalventas">0</h6>
                     </div>
                     <div class="col-sm-3">
-                        <i class="fas  fa-shopping-bag fa-2x"></i>
+                        <i class="fas fa-shopping-bag fa-2x"></i>
                     </div>
                 </div>
             </div>
@@ -57,7 +58,7 @@
 
                     </div>
                     <div class="col-sm-3">
-                        <i class="fas  fa-boxes fa-2x"></i>
+                        <i class="fas fa-boxes fa-2x"></i>
 
                     </div>
                 </div>
@@ -78,38 +79,38 @@
 
     <div class="card-body">
 
-        <form>
+        <form action="@Url.Action("ExportarVenta","Home")" method="post">
             <div class="row align-items-lg-end">
                 <div class="col-sm-2">
                     <div class="mb-2">
-                        <label class="form-label">fecha de Inicio:</label>
-                        <input class="form-label" type="text" id="txtfechainicio" name="fechainicio" />
+                        <label class="form-label">Fecha de Inicio:</label>
+                        <input class="form-control" type="text" id="txtfechainicio" name="fechainicio" />
                     </div>
                 </div>
 
 
                 <div class="col-sm-2">
                     <div class="mb-2">
-                        <label class="form-label">fecha de Fin:</label>
-                        <input class="form-label" type="text" id="txtfechafin" name="fechafin" />
+                        <label class="form-label">Fecha de Fin:</label>
+                        <input class="form-control" type="text" id="txtfechafin" name="fechafin" />
                     </div>
                 </div>
 
                 <div class="col-sm-2">
                     <div class="mb-2">
                         <label class="form-label">Id Transaccion:</label>
-                        <input class="form-label" type="text" id="txtidtransaccion" name="idtransaccion" />
+                        <input class="form-control" type="text" id="txtidtransaccion" name="idtransaccion" />
                     </div>
                 </div>
 
                 <div class="col-sm-2">
-                    <div class=" d-grid mb-2">
-                        <button class="btn btn-primary" id="btnbuscar" type="button"> <i class="fas fa-search"></i>Buscar </button>
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-outline-primary" id="btnbuscar" type="button"> <i class="fas fa-search"></i>Buscar </button>
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <div class=" d-grid mb-2">
-                        <button class="btn btn-success" type="submit"> <i class="fas fa-file-excel"></i> Exportar </button>
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-outline-success" type="submit"> <i class="fas fa-file-excel"></i> Exportar </button>
                     </div>
                 </div>
 
@@ -117,29 +118,27 @@
         </form>
         <hr />
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-sm-12">
                 <table id="tabla" class="display cell-border" style="width:100%">
 
                     <thead>
-                        <th>Fecha venta</th>
-                        <th>Clientes</th>
-                        <th>Productos </th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
-                        <th>Total</th>
-                        <th>ID Transaccion</th>
+                       <tr>
+                            <th>Fecha venta</th>
+                            <th>Clientes</th>
+                            <th>Productos </th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>ID Transaccion</th>
+                       </tr>
 
                     </thead>
                     <tbody>
 
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
-
     </div>
 </div>
 
@@ -148,23 +147,70 @@
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        jQuery.ajax({
-            url: '@Url.Action("VistaDashBoard", "Mantenedor")',
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                var objeto = data.resultado;
 
-                $("totalclientes").text(objeto.TotalCliente)
-                $("totalventas").text(objeto.Venta)
-                $("totalproductos").text(objeto.Producto)
+        var tabladata;
 
-           
+        $(document).ready(function(){
 
-            },
-            
-        });
+            $("#txtfechainicio").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+            $("#txtfechafin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+
+
+            jQuery.ajax({
+                url: '@Url.Action("VistaDashBoard", "Home")',
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    var objeto = data.resultado;
+                    $("#totalclientes").text(objeto.totalCliente)
+                    $("#totalventas").text(objeto.totalVenta)
+                    $("#totalproducto").text(objeto.totalProducto)
+
+                }
+            });
+            //fechainicio,fechafin,idtransaccion
+            var Url = '@Url.Action("ListarReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtransaccion=" + $("#txtidtransaccion").val();
+
+            tabladata = $("#tabla").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: Url,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    { "data": "fechaVenta" },
+                    { "data": "cliente" },
+                    { "data": "producto" },
+                    { "data": "precio" },
+                    { "data": "cantidad" },
+                    { "data": "total" },
+                    { "data": "idTransaccion" }
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-MX.json"
+                }
+
+
+            });
+
+        })
+
+       $("#btnbuscar").on("click",function(){
+            var nueva_url = '@Url.Action("ListarReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtransaccion=" + $("#txtidtransaccion").val();
+
+           tabladata.ajax.url(nueva_url).load();
+
+       })
 
     </script>
 
