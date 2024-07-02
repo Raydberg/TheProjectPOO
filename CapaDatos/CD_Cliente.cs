@@ -141,6 +141,6 @@ namespace CapaDatos
                 Mensaje = ex.Message;
             }
             return resultado;
-        s}
+        }
     }
 }
