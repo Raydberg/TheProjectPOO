@@ -131,7 +131,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("@clave", clave);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
-                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    resultado = cmd.ExecuteNonQuery() > 0 ? false : true;
                 }
             }
             catch (Exception ex)
@@ -141,6 +141,6 @@ namespace CapaDatos
                 Mensaje = ex.Message;
             }
             return resultado;
-        }
+        s}
     }
 }
