@@ -41,7 +41,7 @@ namespace CapaPresentacionTienda.Controllers
             return Json(new {data = lista});
         }
         [HttpPost]
-        public JsonResult ListaMarcaporCategorias(int idcategoria)
+        public JsonResult ListaMarcaporCategorias([FromQuery] int idcategoria)
         {
             List<Marca> lista = new List<Marca>();
             lista = new CN_Marca().ListarMarcaporCategoria(idcategoria);
@@ -49,7 +49,7 @@ namespace CapaPresentacionTienda.Controllers
         }
 
         [HttpPost]
-        public JsonResult ListarProducto(int idcategoria, int idmarca, int nroPagina)
+        public JsonResult ListarProducto([FromQuery] int idcategoria, int idmarca, int nroPagina)
         {
             List<Producto> lista = new List<Producto>();
 
@@ -76,7 +76,7 @@ namespace CapaPresentacionTienda.Controllers
 
 
             var jsonresult = Json(new { data = lista });
-            jsonresult;
+           // jsonresult;
 
             return jsonresult;
 
