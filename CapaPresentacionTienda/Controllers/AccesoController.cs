@@ -74,31 +74,29 @@ namespace CapaPresentacionTienda.Controllers
                     return RedirectToAction("CambiarClave","Acceso");
                 }
                 else {
+                    
                     ViewBag.Error = null;
 
                     return RedirectToAction("Index", "Tienda");
 
-                }
-
-                
+                }                
             }
-
         }
 
         [HttpPost]
         public IActionResult Reestablecer(string correo)
         {
-            Cliente oCliente = new Cliente();
-            oCliente = new CN_Cliente().Listar().Where(item => item.Correo == correo).FirstOrDefault();
+            Cliente cliente = new Cliente();
+            cliente = new CN_Cliente().Listar().Where(item => item.Correo == correo).FirstOrDefault();
 
-            if (oCliente == null)
+            if (cliente == null)
             {
                 ViewBag.Error = "No se encontro un Cliente  relacionado a ese correo";
                 return View();
             }
 
             string mensaje = string.Empty;
-            bool respuesta = new CN_Usuarios().ReestablecerClave(oCliente.IdCliente, correo, out mensaje);
+            bool respuesta = new CN_Cliente().ReestablecerClave(cliente.IdCliente, correo, out mensaje);
 
             if (respuesta)
             {

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CapaEntidad.Cliente;
+@{
     Layout = null;
 }
 
@@ -7,55 +8,82 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Registrar</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StylesFooter.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- </head>
-<body class="bg-primary">
+
+</head>
+<body >
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-5">
+                        <div class="col-lg-7">
                             <div class="card mt-5 rounded-lg border-0 shadow-lg">
-                                <div class="card-header"><h3 class="font-weight-light my-4 text-center">Login</h3></div>
+                                <div class="card-header"><h3 class="font-weight-light my-4 text-center">Crear una cuenta</h3></div>
                                 <div class="card-body">
-                                    <form action="@Url.Action("Index","Acceso")" method="post" id="loginForm">
-                                        <div class="form-floating mb-3 custom-outline-purple">
-                                            <input class="form-control" id="inputEmail" type="email" placeholder=" " name="correo" required />
-                                            <label for="inputEmail">Email</label>
+                                    <form action="@Url.Action("Registrar","Acceso")" method="post">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0 custom-outline-purple">                                               
+                                                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", @placeholder = ".", @id = "txtnombre", value = ViewData["Nombre"] })
+                                                    @Html.Label("txtnombre","Nombre")
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating custom-outline-purple">
+                                                    @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control", @placeholder = ".", @id = "txtapellidos", value = ViewData["Apellidos"] })
+                                                    @Html.Label("txtapellidos", "Apellidos")
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-floating mb-3 input-icon custom-outline-purple">
-                                            <input class="form-control" id="inputPassword" type="password" placeholder=" " name="clave" required />
-                                            <label for="inputPassword">Contraseña</label>
-                                            <i class="bi bi-eye-slash" id="togglePassword"></i>
+                                        <div class="form-floating mb-3 custom-outline-purple">
+                                            @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", @placeholder = ".", @id = "txtcorreo", value = ViewData["Correo"] })
+                                            @Html.Label("txtcorreo", "Correo")
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0 custom-outline-purple">
+                                                    @Html.PasswordFor(m => m.Clave, new { @class = "form-control", @placeholder = ".", @id = "txtclave" })
+                                                    @Html.Label("txtclave", "Contraseña")
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0 custom-outline-purple">
+                                                    @Html.PasswordFor(m => m.ConfirmarClave, new { @class = "form-control", @placeholder = ".", @id = "txtclave" })
+                                                    @Html.Label("txtclave", "Confirmar Contraseña")
+                                                </div>
+                                            </div>
                                         </div>
                                         @{
                                             @if (ViewBag.Error != null)
                                             {
-                                                <div class="form-floating mb-3">
+                                                <div class="form-floating mb-3 mb-md-0 custom-outline-purple">
                                                     <div class="alert alert-danger" role="alert">
                                                         @ViewBag.Error
                                                     </div>
                                                 </div>
                                             }
                                         }
-                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="@Url.Action("Reestablecer", "Acceso")">¿Has olvidado tu contraseña?</a>
-                                            <button type="submit" class="btn btn-primary" id="btn-custom">Iniciar Sesion</button>
+                                        <div class="mt-4 mb-0">
+                                            <div class="d-grid"><button class="btn-block" id="btn-custom" type="submit">Crear Cuenta</button></div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-footer py-3 text-center">
+                                    <div class="small"><a href="@Url.Action("Index","Acceso")">¿Ya tienes una cuenta? Iniciar Sesion</a></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
+        </div>
+        <div id="layoutAuthentication_footer">
+           
         </div>
     </div>
     <footer>
@@ -113,7 +141,6 @@
         </div>
 
     </footer>
-
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script>

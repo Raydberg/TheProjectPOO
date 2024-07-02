@@ -19,7 +19,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
                 {
-                    string query = "select IdCliente,Nombre,Apellidos,Correo,Clave,Reestablecer from CLIENTE";
+                    string query = "select IdCliente,Nombre,Apellidos,Correo,Clave,Restablecer from CLIENTE";
 
                     SqlCommand cmd = new SqlCommand(query, oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -38,7 +38,7 @@ namespace CapaDatos
                                  Apellidos = dr["Apellidos"].ToString(),
                                  Correo = dr["Correo"].ToString(),
                                  Clave = dr["Clave"].ToString(),
-                                 Restablecer = Convert.ToBoolean(dr["Reestablecer"]),
+                                 Restablecer = Convert.ToBoolean(dr["Restablecer"]),
                              }
                               );
                         }
@@ -102,7 +102,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
                 {
-                    SqlCommand cmd = new SqlCommand("update  cliente set clave = @nuevaclave , restablecer = 0 where idcliente = @Id", oconexion);
+                    SqlCommand cmd = new SqlCommand("update  cliente set clave = @nuevaclave , restablecer = 0 where IdCliente = @Id", oconexion);
                     cmd.Parameters.AddWithValue("@Id", idcliente);
                     cmd.Parameters.AddWithValue("@nuevaclave", nuevaclave);
                     cmd.CommandType = CommandType.Text;
@@ -126,7 +126,7 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
                 {
-                    SqlCommand cmd = new SqlCommand("update  cliente set clave = @clave , restablecer = 1 where idcliente = @Id", oconexion);
+                    SqlCommand cmd = new SqlCommand("update  cliente set Clave = @clave , Restablecer = 1 where IdCliente = @Id", oconexion);
                     cmd.Parameters.AddWithValue("@Id", idcliente);
                     cmd.Parameters.AddWithValue("@clave", clave);
                     cmd.CommandType = CommandType.Text;
@@ -136,6 +136,7 @@ namespace CapaDatos
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 resultado = false;
                 Mensaje = ex.Message;
             }

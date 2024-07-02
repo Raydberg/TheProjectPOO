@@ -15,13 +15,13 @@ namespace TheProjectPOO
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = "/Acceso/Login";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-                });
+            
+            //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(options =>
+            //    {
+            //        options.LoginPath = "/Acceso/Login";
+            //        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+            //    });
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

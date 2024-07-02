@@ -12890,3 +12890,31 @@ body {
         right: 1rem;
         cursor: pointer;
     }
+    /*FORM CONTROL MORADO*/
+.custom-outline-purple .form-control:focus {
+    border-color: #6f42c1; /* Cambia el color del borde al hacer clic */
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); /* Cambia el shadow color al hacer clic */
+}
+    /*BTN-MORADO*/
+#btn-custom {
+    color: #6f42c1; /* Color del texto */
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid #6f42c1; /* Borde sólido morado */
+    padding: 0.375rem 0.75rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente */
+    line-height: 1.5; /* Altura de línea */
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Transiciones suaves */
+}
+
+    #btn-custom:hover {
+        color: #fff; /* Cambia el color del texto al pasar el mouse */
+        background-color: #6f42c1; /* Fondo morado al pasar el mouse */
+    }
+
+    #btn-custom:focus {
+        color: #fff; /* Cambia el color del texto al hacer clic */
+        background-color: #6f42c1; /* Fondo morado al hacer clic */
+        border-color: #6f42c1; /* Borde morado al hacer clic */
+        box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); /* Sombra al hacer clic */
+        outline: none; /* Quita el outline predeterminado de focus */
+    }

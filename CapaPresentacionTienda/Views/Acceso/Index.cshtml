@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
@@ -6,14 +7,16 @@
 
 <html>
 <head>
+    
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/StylesFooter.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- </head>
-<body class="bg-primary">
+
+</head>
+<body>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -45,11 +48,14 @@
                                         }
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="@Url.Action("Reestablecer", "Acceso")">¿Has olvidado tu contraseña?</a>
-                                            <button type="submit" class="btn btn-primary" id="btn-custom">Iniciar Sesion</button>
+                                            <button type="submit"  id="btn-custom">Iniciar Sesion</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-footer py-3 text-center">
+                                    <div class="small">
+                                        <a href="@Url.Action("Registrar","Acceso")">¿No tienes una cuenta ? Registrate</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

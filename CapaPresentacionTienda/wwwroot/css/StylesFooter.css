@@ -1,0 +1,36 @@
+﻿body {
+    background: linear-gradient(#1e152e, #161616);
+}
+.background {
+    position: absolute;
+    width: 100vw;
+    z-index: -5;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0; 
+    width: 100vw;
+    height: 100vh;
+    transform: scaleY(3) scaleX(2.25) ;
+    transform-origin: bottom;
+    box-sizing: border-box;
+    display: block;
+    pointer-events: none;
+}
+
+.footer-style { 
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    width: 100vw;
+    height: 370px;
+    overflow: hidden; 
+}

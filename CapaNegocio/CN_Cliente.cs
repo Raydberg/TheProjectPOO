@@ -64,27 +64,36 @@ namespace CapaNegocio
             string nuevaclave = CN_Recursos.GenerarClave();
 
             bool resultado = objCapaDato.ReestablecerClave(idcliente, CN_Recursos.CovertirSha256(nuevaclave), out Mensaje);
-            if (resultado)
+            try
             {
-                string asunto = "Contraseña Reestablecida";
-                string mensaje_correo = "<h3>Su Cuenta fue reestablecida correctamente</h3></br><p>Su contraseña para acceder  ahora  es : !clave! </p>";
-                mensaje_correo = mensaje_correo.Replace("!clave!", nuevaclave);
-                bool respuesta = CN_Recursos.EnviarCorreo(correo, asunto, mensaje_correo);
-                if (respuesta)
+                if (resultado)
                 {
+                    string asunto = "Contraseña Reestablecida";
+                    string mensaje_correo = "<h3>Su Cuenta fue reestablecida correctamente</h3></br><p>Su contraseña para acceder  ahora  es : !clave! </p>";
+                    mensaje_correo = mensaje_correo.Replace("!clave!", nuevaclave);
+                    bool respuesta = CN_Recursos.EnviarCorreo(correo, asunto, mensaje_correo);
+                    if (respuesta)
+                    {
 
 
-                    return true;
+                        return true;
+                    }
+                    else
+                    {
+                        Mensaje = "No se pudo enviar el correo";
+                        return false;
+                    }
                 }
                 else
                 {
-                    Mensaje = "No se pudo enviar el correo";
+                    Mensaje = "No se pudo reestablecer la contraseña";
                     return false;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Mensaje = "No se pudo reestablecer la contraseña";
+                Mensaje = ex.Message;
+                Console.WriteLine(ex.ToString());
                 return false;
             }
         }
