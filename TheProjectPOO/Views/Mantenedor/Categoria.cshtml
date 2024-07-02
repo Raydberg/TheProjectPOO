@@ -7,7 +7,7 @@
 }
 
 <ol class="breadcrumb mb-4 mt-4">
-    <li class="breadcrumb-item"><a href="index.html">Mantenimiento</a></li>
+    <li class="breadcrumb-item"><a href="">Mantenimiento</a></li>
     <li class="breadcrumb-item active">Categorias</li>
 </ol>
 
@@ -229,8 +229,7 @@
             var Categoria = {
                 idCategoria: $("#txtid").val(),
                 activo: $("#cboactivo").val() == 1 ? true : false,
-                descripcion: $("#txtdescripcion").val()
-             
+                descripcion: $("#txtdescripcion").val()            
 
             }
             console.log(Categoria);
@@ -244,8 +243,6 @@
                 success: function (data) {
                     //OCULTAR LOADING
                     $(".modal-body").LoadingOverlay("hide");
-
-
                     // categoria NUEVO
                     if (Categoria.idCategoria== 0) {
 
@@ -259,8 +256,6 @@
                             $("#mensajeError").text(data.mensaje);
                             $("#mensajeError").show();
                         }
-
-
                     }
                     //USUARIO EDITAR
                     else {
@@ -272,10 +267,7 @@
                             $("#mensajeError").text(data.mensaje);
                             $("#mensajeError").show();
                         }
-
                     }
-
-
                 },
                 error: function (error) {
                     $(".modal-body").LoadingOverlay("hide");
