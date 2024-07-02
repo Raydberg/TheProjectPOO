@@ -147,7 +147,51 @@ namespace CapaDatos
             return resultado;
         }
 
+        public List<Marca> ListarMarcaporCategoria(int idcategoria)
+        {
+            List<Marca> lista = new List<Marca>();
+            var conexion = new Conexion();
+            try
+            {
+                using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("SELECT distinct m.IdMarca,m.Descripcion FROM PRODUCTO p");
+                    sb.AppendLine("INNER JOIN CATEGORIA c  on c.IdCategoria = p.IdCategoria");
+                    sb.AppendLine("INNER JOIN MARCA m on m.IdMarca = p.IdMarca and m.Activo = 1");
+                    sb.AppendLine("WHERE c.IdCategoria = iif(@idcategoria = 0,c.IdCategoria,@idcategoria)");
 
+
+                    SqlCommand cmd = new SqlCommand(sb.ToString(), oconexion);
+                    cmd.Parameters.AddWithValue("@idcategoria", idcategoria);
+                    cmd.CommandType = CommandType.Text;
+                    oconexion.Open();
+                    // El SqlDataReader lo que hara es poder leer los datos que se obtengan de la consulta
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            //Lo que hace es leer los datos de la consulta y los va guardando en la lista
+                            lista.Add(
+                             new Marca()
+                             {
+                                 IdMarca = Convert.ToInt32(dr["IdMarca"]),
+                                 Descripcion = dr["Descripcion"].ToString()
+                             });
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine("Error al traer cliente de la base de datos");
+                Console.WriteLine(error);
+                lista = new List<Marca>();
+            }
+            return lista;
+        }
 
     }
 }
