@@ -46,7 +46,7 @@ namespace CapaPresentacionTienda
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Acceso}/{action=Index}/{id?}");
+                pattern: "{controller=Tienda}/{action=Index}/{id?}");
 
             app.Run();
         }

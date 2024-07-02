@@ -9,7 +9,7 @@ namespace CapaPresentacionTienda.Controllers
         public IActionResult Index()
         {
             var clienteJson = HttpContext.Session.GetString("Cliente");
-            ViewBag.ClienteEnSesion = clienteJson != null;
+            ViewBag.ClienteEnSesion = clienteJson == null;
             return View();
         }
         public IActionResult Reestablecer()
