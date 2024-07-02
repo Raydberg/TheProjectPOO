@@ -10,15 +10,21 @@
     <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="Font.Awesome" Version="5.15.4" />
     <PackageReference Include="jquery.datatables" Version="1.10.15" />
+    <PackageReference Include="jQuery.LoadingOverlay" Version="2.1.5" />
     <PackageReference Include="jQuery.Validation" Version="1.20.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="SweetAlert.Bootstrap" Version="1.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CapaEntidad\CapaEntidad.csproj" />
     <ProjectReference Include="..\CapaNegocio\CapaNegocio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Tienda\" />
   </ItemGroup>
 
 </Project>

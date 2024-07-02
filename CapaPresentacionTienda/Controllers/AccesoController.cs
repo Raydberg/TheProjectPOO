@@ -153,7 +153,9 @@ namespace CapaPresentacionTienda.Controllers
         }
 
         public IActionResult CerrarSesion()
+            
         {
+            Session["Cliente"] = null;
             return RedirectToAction("Index", "Acceso");
         }
 
