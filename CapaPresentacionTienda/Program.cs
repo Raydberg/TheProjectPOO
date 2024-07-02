@@ -9,6 +9,15 @@ namespace CapaPresentacionTienda
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Configuración para utilizar sesiones
+            builder.Services.AddDistributedMemoryCache(); // Utiliza la caché en memoria para almacenar las sesiones.
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Tiempo de vida de la sesión
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,6 +30,9 @@ namespace CapaPresentacionTienda
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Asegúrate de llamar a UseSession() después de UseRouting() y antes de UseEndpoints().
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

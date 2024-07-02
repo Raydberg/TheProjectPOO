@@ -1,7 +1,7 @@
 ﻿using CapaEntidad;
 using CapaNegocio;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Text.Json;
 namespace CapaPresentacionTienda.Controllers
 {
     public class AccesoController : Controller
@@ -76,7 +76,8 @@ namespace CapaPresentacionTienda.Controllers
                 else {
                     
                     ViewBag.Error = null;
-
+                    string clienteJson = JsonSerializer.Serialize(oCliente);
+                    HttpContext.Session.SetString("Cliente", clienteJson);
                     return RedirectToAction("Index", "Tienda");
 
                 }                
@@ -155,7 +156,7 @@ namespace CapaPresentacionTienda.Controllers
         public IActionResult CerrarSesion()
             
         {
-            Session["Cliente"] = null;
+            HttpContext.Session.Remove("Cliente");
             return RedirectToAction("Index", "Acceso");
         }
 
