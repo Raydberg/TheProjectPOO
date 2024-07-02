@@ -12,16 +12,21 @@
     <link rel="stylesheet" href="~/css/StylesFooter.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
- </head>
-<body class="bg-primary">
+    <style>
+      
+    </style>
+</head>
+
+
+<body >
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-5">
-                            <div class="card mt-5 rounded-lg border-0 shadow-lg">
-                                <div class="card-header"><h3 class="font-weight-light my-4 text-center">Login</h3></div>
+                            <div class="card mt-5 form-wave-background rounded-lg border-0 shadow-lg">
+                                <div class="card-header"><h3 class="font-weight-light my-2 text-center">Login</h3></div>
                                 <div class="card-body">
                                     <form action="@Url.Action("Index","Acceso")" method="post" id="loginForm">
                                         <div class="form-floating mb-3 custom-outline-purple">
@@ -31,7 +36,7 @@
                                         <div class="form-floating mb-3 input-icon custom-outline-purple">
                                             <input class="form-control" id="inputPassword" type="password" placeholder=" " name="clave" required />
                                             <label for="inputPassword">Contraseña</label>
-                                            <i class="bi bi-eye-slash" id="togglePassword"></i>
+                                            <i class="bi bi-eye-slash-fill" id="togglePassword"></i>
                                         </div>
                                         @{
                                             @if (ViewBag.Error != null)
@@ -45,7 +50,7 @@
                                         }
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="@Url.Action("Reestablecer", "Acceso")">¿Has olvidado tu contraseña?</a>
-                                            <button type="submit" class="btn btn-primary" id="btn-custom">Iniciar Sesion</button>
+                                            <button type="submit"  id="btn-custom">Iniciar Sesion</button>
                                         </div>
                                     </form>
                                 </div>
@@ -124,9 +129,6 @@
             this.classList.toggle('bi-eye');
         });
 
-        document.getElementById('loginForm').addEventListener('submit', function (e) {
-            // Aquí puedes añadir validaciones adicionales si es necesario
-        });
     </script>
 </body>
 </html>

@@ -12892,29 +12892,43 @@ body {
     }
     /*FORM CONTROL MORADO*/
 .custom-outline-purple .form-control:focus {
-    border-color: #6f42c1; /* Cambia el color del borde al hacer clic */
-    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); /* Cambia el shadow color al hacer clic */
+    border-color: #6f42c1; 
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); 
 }
     /*BTN-MORADO*/
 #btn-custom {
-    color: #6f42c1; /* Color del texto */
-    background-color: transparent; /* Fondo transparente */
-    border: 2px solid #6f42c1; /* Borde sólido morado */
-    padding: 0.375rem 0.75rem; /* Espaciado interno */
-    font-size: 1rem; /* Tamaño de fuente */
-    line-height: 1.5; /* Altura de línea */
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Transiciones suaves */
+    color: #6f42c1; 
+    background-color: transparent; 
+    border: 2px solid #6f42c1; 
+    border-radius: 0.375rem;
+    padding: 0.375rem 0.75rem; 
+    font-size: 1rem; 
+    line-height: 1.5; 
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
     #btn-custom:hover {
-        color: #fff; /* Cambia el color del texto al pasar el mouse */
-        background-color: #6f42c1; /* Fondo morado al pasar el mouse */
+        color: #fff; 
+        background-color: #6f42c1; 
     }
 
     #btn-custom:focus {
-        color: #fff; /* Cambia el color del texto al hacer clic */
-        background-color: #6f42c1; /* Fondo morado al hacer clic */
-        border-color: #6f42c1; /* Borde morado al hacer clic */
-        box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); /* Sombra al hacer clic */
-        outline: none; /* Quita el outline predeterminado de focus */
+        color: #fff; 
+        background-color: #6f42c1;
+        border-color: #6f42c1;
+        box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25); 
+        outline: none; 
     }
+    /**/
+.form-wave-background {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><g transform="rotate(-18, 720, 160)"> <path fill="%235819ce" fill-opacity="0.5" d="M0,128L120,138.7C240,149,480,171,720,160C960,149,1200,107,1320,85.3L1440,64L1440,0L1320,0C1200,0,960,0,720,0C480,0,240,0,120,0L0,0Z"/></g></svg>');
+    background-repeat: no-repeat;
+    background-size: 520% auto;
+    background-position: center;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    overflow: hidden;
+}

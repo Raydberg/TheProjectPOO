@@ -21,11 +21,11 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-7">
-                            <div class="card mt-5 rounded-lg border-0 shadow-lg">
+                            <div class="card mt-2 form-wave-background rounded-lg border-0 shadow-lg">
                                 <div class="card-header"><h3 class="font-weight-light my-4 text-center">Cambiar Contraseña</h3></div>
                                 <div class="card-body">
                                     <form action="@Url.Action("CambiarClave","Acceso")" method="post">
-                                        <input class="form-control" type="text" value="@TempData["IdUsuario"]" name="idusuario"/>                                     
+                                       @*  <input class="form-control" type="text" value="@TempData["IdUsuario"]" name="idusuario"/>  *@                                    
                                         <div class="row mb-3">
                                             <div class="col-md-12">
                                                 <div class="form-floating mb-3 mb-md-0 input-icon custom-outline-purple">
@@ -70,17 +70,24 @@
                                         }
 
                                         <div class="mt-4 mb-0">
-                                            <div class="d-grid">
-
-                                                <button class="btn-block" id="btn-custom" type="submit">Cambiar Contraseña</button>
-
+                                            <div class="card-footer py-3 text-center">
+                                                <div class="d-flex justify-content-evenly align-items-center">
+                                                    <div>
+                                                        <a href="@Url.Action("Index","Acceso")" class="btn btn-link">Volver</a>
+                                                    </div>
+                                                    <div class="mr-3">
+                                                        <!-- Añade un margen a la derecha para el espacio -->
+                                                        <button class="" id="btn-custom" type="submit">Cambiar Contraseña</button>
+                                                    </div>
+                                                    
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer py-3 text-center">
+                               @*  <div class="card-footer py-3 text-center">
                                     <div class="small"><a href="@Url.Action("Index","Acceso")">Volver</a></div>
-                                </div>
+                                </div> *@
                             </div>
                         </div>
                     </div>
