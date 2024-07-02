@@ -82,7 +82,7 @@ namespace TheProjectPOO.Controllers
             bool respuesta = new CN_Usuarios().CambiarClave(int.Parse(idusuario),nuevaclave,out mensaje);
             if (respuesta)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Acceso");
             }
             else
             {

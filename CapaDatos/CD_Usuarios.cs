@@ -187,12 +187,12 @@ namespace CapaDatos
             {
                 using (SqlConnection oconexion = new SqlConnection(conexion.getConexion()))
                 {
-                    SqlCommand cmd = new SqlCommand("update  usuario set clave = @clave , reestablecer = 1 where idusuario = @Id", oconexion);
-                    cmd.Parameters.AddWithValue("@Id", idusuario);
+                    SqlCommand cmd = new SqlCommand("update  usuario set clave = @clave , reestablecer = 1 where idusuario = @id", oconexion);
+                    cmd.Parameters.AddWithValue("@id", idusuario);
                     cmd.Parameters.AddWithValue("@clave", clave);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
-                    resultado = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    resultado = cmd.ExecuteNonQuery() > 0 ? false : true;
                 }
             }
             catch (Exception ex)

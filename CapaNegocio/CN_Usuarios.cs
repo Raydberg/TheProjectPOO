@@ -119,8 +119,6 @@ namespace CapaNegocio
                 bool respuesta = CN_Recursos.EnviarCorreo(correo, asunto, mensaje_correo);
                 if (respuesta)
                 {
-
-
                     return true;
                 }
                 else
