@@ -18,6 +18,15 @@ namespace CapaPresentacionTienda
                 options.Cookie.IsEssential = true;
             });
 
+            // Configuración de autenticación basada en cookies
+            builder.Services.AddAuthentication("CookieAuthentication")
+                .AddCookie("CookieAuthentication", config =>
+                {
+                    config.Cookie.Name = "UserLoginCookie"; // Nombre de la cookie
+                    config.LoginPath = "/Acceso/Index"; // Ruta al formulario de login
+                    config.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Tiempo de expiración de la cookie
+                });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -29,6 +38,7 @@ namespace CapaPresentacionTienda
 
             app.UseRouting();
 
+            app.UseAuthentication(); // Asegúrate de añadir esto
             app.UseAuthorization();
 
             // Asegúrate de llamar a UseSession() después de UseRouting() y antes de UseEndpoints().
@@ -36,7 +46,7 @@ namespace CapaPresentacionTienda
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Tienda}/{action=Index}/{id?}");
+                pattern: "{controller=Acceso}/{action=Index}/{id?}");
 
             app.Run();
         }
