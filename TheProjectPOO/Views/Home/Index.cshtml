@@ -171,7 +171,7 @@
                 }
             });
             //fechainicio,fechafin,idtransaccion
-            var Url = '@Url.Action("ListarReporte", "Home")' +
+            var Url = '@Url.Action("ListaReporte", "Home")' +
                 "?fechainicio=" + $("#txtfechainicio").val() +
                 "&fechafin=" + $("#txtfechafin").val() +
                 "&idtransaccion=" + $("#txtidtransaccion").val();
@@ -183,6 +183,7 @@
                     url: Url,
                     type: "GET",
                     dataType: "json"
+                  
                 },
                 "columns": [
                     { "data": "fechaVenta" },
@@ -203,7 +204,7 @@
         })
 
        $("#btnbuscar").on("click",function(){
-            var nueva_url = '@Url.Action("ListarReporte", "Home")' +
+            var nueva_url = '@Url.Action("ListaReporte", "Home")' +
                 "?fechainicio=" + $("#txtfechainicio").val() +
                 "&fechafin=" + $("#txtfechafin").val() +
                 "&idtransaccion=" + $("#txtidtransaccion").val();

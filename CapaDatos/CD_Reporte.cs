@@ -24,7 +24,7 @@ namespace CapaDatos
                     SqlCommand cmd = new SqlCommand("sp_ReporteVentas", oconexion);
                     cmd.Parameters.AddWithValue("fechainicio",fechainicio);
                     cmd.Parameters.AddWithValue("fechafin", fechafin);
-                    cmd.Parameters.AddWithValue("idtransaccion",idtransaccion);
+                    cmd.Parameters.AddWithValue("idtransaccion",idtransaccion == null ? "": idtransaccion);
                     cmd.CommandType = CommandType.StoredProcedure;
                     oconexion.Open();
                     // El SqlDataReader lo que hara es poder leer los datos que se obtengan de la consulta

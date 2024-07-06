@@ -41,15 +41,15 @@ namespace CapaNegocio
             {
                 MailMessage mail = new MailMessage();
                 mail.To.Add(correo);
-                mail.From = new MailAddress("darthvaderbig6005@gmail.com");//Poner correo de prueba
+                mail.From = new MailAddress("darthvaderbig6005@gmail.com");
                 mail.Subject = asunto;
                 mail.Body = mensaje;
                 mail.IsBodyHtml = true;
 
                 var smtp = new SmtpClient()
                 {
-                    //VIDEO 13
-                    Credentials = new NetworkCredential("darthvaderbig6005@gmail.com", "rvgr asdg zagi xvhb "),//Poner correo de prueba y contraseña generada por contraseña de aplicaciones
+                    
+                    Credentials = new NetworkCredential("darthvaderbig6005@gmail.com", "rvgr asdg zagi xvhb "),
                     Host = "smtp.gmail.com",
                     Port = 587,
                     EnableSsl = true

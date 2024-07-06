@@ -165,7 +165,7 @@ namespace CapaDatos
                     cmd.Parameters.AddWithValue("@nuevaclave", nuevaclave);
                     cmd.CommandType = CommandType.Text;
                     oconexion.Open();
-                    resultado = cmd.ExecuteNonQuery() <= 0 ? true : false;
+                    resultado = cmd.ExecuteNonQuery() >= 0 ? true : false;
                 }
             }
             catch (Exception ex)

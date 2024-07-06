@@ -39,6 +39,7 @@ namespace TheProjectPOO.Controllers
             return Json(new { data = oLista });
 
         }
+
         [HttpPost]
         public JsonResult GuardarUsuario([FromBody] Usuario objeto)
         {
@@ -107,7 +108,7 @@ namespace TheProjectPOO.Controllers
             foreach (Reporte rp in  oLista) {
                 dt.Rows.Add( new object[]
                 {
-                    rp.FechaVenta,
+                   
                     rp.FechaVenta,
                     rp.Cliente,
                     rp.Producto,
